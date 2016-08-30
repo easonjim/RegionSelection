@@ -1,0 +1,424 @@
+﻿
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/post.js"></script>
+		
+		<title>智能寄件</title>
+		<style>
+		.icon-jiantou{
+			width:2rem;
+			height:2rem;
+			display: inline-block; 
+			position:absolute;
+			margin-top:-1rem;
+			top:50%;
+			right:0.8rem;
+			background-size:100% auto; 
+			background-image: url("img/jiantou.png");
+		}
+		.icon-sj{
+			width:1.66rem;
+			height:1.66rem;
+			display: inline-block;
+			background-size:100% auto; 
+			background-image:url("img/sj.png");
+			margin-right:0.8rem
+		}
+		.icon-rt{
+			width:1.66rem;
+			height:1.66rem;
+			display: inline-block;
+			background-size:100% auto; 
+			background-image:url("img/ren.png");
+			margin-right:0.8rem;
+		}
+		.icon-map{
+			width:1.66rem;
+			height:1.66rem;
+			display: inline-block;
+			background-size:100% auto; 
+			background-image:url("img/dz.png");
+			margin:0 0.8rem 0 0; 
+		}
+		.icon-jt{
+			width:1.66rem;
+			height:1.66rem;
+			display: inline-block;
+			background-size:100% auto; 
+			background-image: url("img/wxz.png");
+			margin-left:1rem
+		}
+		
+		body{font-family: "微软雅黑";}
+		
+		<!-- district style -->
+		.district-selector {
+			background: none repeat scroll 0 0 #fff;
+		    border-radius: 3px;
+		    font-size: 13px;
+		    padding-left: 0;
+		    position: absolute;
+		    top: 95px;
+		    bottom: 0px;
+		    width: 100%;
+		    height:80%;
+		    z-index:2015;
+		    display:none;
+		}
+		.district-selector ul.inline, ol.inline {
+		    list-style: outside none none;
+		    margin-left: 0;
+		}
+		.district-selector ul.unstyled, ol.unstyled {
+		    list-style: outside none none;
+		    margin-left: 0;
+		}
+		.district-selector ul, ol {
+		    margin: 0 0 10px 25px;
+		    padding: 0;
+		}
+		.district-item {
+		    color: #000;
+		    cursor: pointer;
+		    float: left;
+		    height: 30px;
+		    overflow: hidden;
+		    padding: 5px 0;
+		    text-align: center;
+		    width: 80px;
+		}
+		.district-item:hover {
+		    background: none repeat scroll 0 0 #1e93ff;
+		    color: #fff;
+		}
+		#district-parent span{
+			position:relative;
+		}
+		
+		</style>
+	</head>
+	<body>
+	<div class="modal fade" onBlur="_reset_address_select()" style="position:absolute;top:125px;left:0px;" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_s" aria-hidden="true">
+			<div class="modal-dialog" style="background: none repeat scroll 0 0 #fff;margin:0;height:100%;overflow:scroll;">
+				<div id="district-selector" class="district-selector" data-role="tabs">
+					      <div data-role="navbar">
+						    <ul class="nav nav-tabs">
+								  <li role="presentation" class="active"><a href="#district-provinces" id="_province_href" data-toggle="tab">省</a></li>
+								  <li role="presentation"><a href="#district-cities" id="_city_href" data-toggle="tab">市</a></li>
+								  <li role="presentation"><a href="#district-counties" id="_district_href" data-toggle="tab">区</a></li>
+								  <li role="presentation"><a href="javascript:void(0);" onclick="$('#exampleClose').click();" data-toggle="tab">关闭</a></li>
+							</ul>
+					      </div>
+					      <div id="myTabContent" class="tab-content">
+						      <div id="district-provinces" class="tab-pane fade in active">
+						       		 正在加载...
+						      </div>
+						      <div id="district-cities" class="tab-pane fade in">
+						        	请选择省或直辖市
+						      </div>
+						      <div id="district-counties" class="tab-pane fade in">
+						        	请选择市
+						      </div>
+					      </div>
+				</div>
+				
+				<button type="button" id="exampleClose" data-dismiss="modal" style="display:none">确认</button>
+			</div>
+		</div>
+	<button id="popup" name="popup" type="button" style="display:none" data-toggle="modal" data-target="#example"></button>
+
+	
+	<div id="_warn" style="position:absolute; top:30%; left:10px; right:10px; height:auto;background: none repeat scroll 0 0 #000;
+	 	 filter:alpha(opacity=50);    
+	     -moz-opacity: 0.5;    
+	     opacity: 0.5; z-index:20; display:none; margin:0 auto;" onclick="_pcd_hidden('_warn')">
+		<p id="_warn_message" style="text-align:center;color:white;vertical-align:middle;line-height:40px;height:auto;">		
+		</p>
+	</div>
+	
+	
+		
+	   <div class="container-fluid" style="padding-top:10px;padding-bottom:10px;padding-left:2px;padding-right:2px">
+	   		<input type="hidden" id="selectProvince" name="selectProvince" value="">
+			<input type="hidden" id="selectCity" name="selectCity" value="">
+			<input type="hidden" id="selectDistrict" name="selectDistrict" value="false">
+			
+	   	<form class="bs-example bs-example-form" role="form" name="editForm" id="editForm" action="simpleInput" method="post">
+	   		<input type="hidden" id="province" name="receiverProvince" value="">
+			<input type="hidden" id="city" name="receiverCity" value="">
+			<input type="hidden" id="district" name="receiverCounty" value="">
+			<input type="hidden" id="sid" name="sid" value="">
+			<input type="hidden" id="parseResultUuid" name="parseResultUuid" value="1f141b36-37ae-4afd-8bb0-a730ac12be1e">
+			<input type="hidden" id="toSenderList" name="toSenderList" value="">
+			
+			<div class="input-group">
+				<span class="input-group-addon">姓名</span>
+				<input type="text" id="receiverMan" name="receiverMan" class="form-control" value="" placeholder="请输入收件人姓名">
+			</div>
+			<div class="input-group" style="margin-top:5px;">
+				      	<span class="input-group-addon">电话</span>
+				         <input type="text" id="receiverManPhone" name="receiverManPhone" class="form-control" value="" placeholder="请输入收件人电话">         
+			</div>
+			      
+			<div class="input-group" style="margin-top:5px;">
+			    <span class="input-group-addon">地区</span>
+			    <input type="text" id="district-parent" name="district-parent" onfocus="_popup()" class="form-control" value="省 - 市 - 区" readonly>
+			</div>			      
+			<div class="input-group" style="margin-top:5px;">
+			    <span class="input-group-addon">地址</span>
+			    <textarea id="receiverManAddress" name="receiverManAddress" class="form-control" rows="2" placeholder="请输入收件人详细地址，包括街道门牌号等">亲</textarea> 
+			</div>		
+			<div class="input-group" style="margin-top:5px;">
+				<span class="input-group-addon">快递公司</span>
+					
+				    
+	  					
+	  						<input type="hidden" id="logisticsProviderCode" name="logisticsProviderCode" class="form-control" value="HTKY" readonly>
+	  						<input type="text" id="logisticsProviderCodeShow" name="logisticsProviderCodeShow" class="form-control" value="百世汇通" readonly>
+	    				
+  					
+  									
+			 </div>
+		  	 <div class="input-group" style="margin-top:5px;">
+			      	<span class="input-group-addon">货品类别</span>
+			        <select class="form-control" id="itemName" name="itemName">
+			         	<option value="" selected="selected">请选择货品类别</option>
+    					<option value="衣帽鞋服"  >衣帽鞋服</option>
+    					<option value="生活用品"  >生活用品</option>
+    					<option value="电子产品"  >电子产品</option>
+						<option value="食品"  >食品</option>
+						<option value="配件"  >配件</option>
+						<option value="文件书刊"  >文件书刊</option>
+						<option value="其他"  >其他</option>
+			   </select>   
+		    </div>
+			<div class="input-group" style="margin-top:5px;">
+			      	<span class="input-group-addon">备注</span>
+			         <textarea rows="2" id="remark" name="remark" class="form-control" placeholder="请输入备注"></textarea>           
+			</div>		
+			
+			<div class="panel panel-default" style="margin-top:5px;padding-top:5px;padding-bottom:5px;">	
+					<table style="width:100%" onclick="_to_senderList()">   
+							<tbody>
+								      <tr>
+								      	<td style="width:40px;text-align:center">
+								      		<img style="width:36px;height:36px;" src="img/send.png"/>
+								      	</td>
+								         <td>
+								         	
+									         	
+													<span>点击添加寄件人信息</span>
+												
+												
+											
+										 </td>
+								         <td style="width:20px;text-align:center">
+								         	<img style="width:20px;height:20px;" src="img/arrow_right_48.png"/>
+								         </td>
+								      </tr>
+							</tbody>
+					</table>
+			</div>
+	   
+	   <a href="javascript:void(0)" onclick="_submit(this);" class="btn btn-primary btn-lg btn-block" role="button">
+	   	提交
+		</a>
+	</form> 
+</div>
+		
+<script>
+	$(document).ready(function () {
+		_reset_address_select();
+	});
+	function _to_senderList(){
+		$("#toSenderList").val("1");
+		$("#editForm").submit();
+		return false;
+	}
+	
+	function _submit(_this){
+		var _name = $("#receiverMan").val();
+		if(_name.length == 0){
+			doWarn("请输入收件人姓名");
+			return false;
+		}else if(_name.length > 30){
+			doWarn("收件人姓名不能超过30个字符");
+			return false;
+		}
+		var _phone = $("#receiverManPhone").val();
+		if(_phone.length == 0){
+			doWarn("请输入收件人联系方式");
+			return false;
+		}else if(_phone.length > 30){
+			doWarn("收件人联系方式不能超过30个字符");
+			return false;
+		}
+		_phone = _mobile_phone_check(_phone);
+		if(_phone.length == 0){
+			doWarn("请输入正确格式的手机号码、固话(区号-号码-分机号)、400和800电话(000-000-0000)");
+			return false;
+		}
+		$("#receiverManPhone").val(_phone);
+		
+		var _district = $("#district").val();
+		if(_district.length == 0){
+			doWarn("请选择收件人所在省市区");
+			return false;
+		}
+		var _address = $("#receiverManAddress").val();
+		if(_address.length == 0){
+			doWarn("请输入收件人详细地址");
+			return false;
+		}else if(_address.length > 100){
+			doWarn("收件人详细地址不可超过100个字符");
+			return false;
+		}
+		
+		var _logisticsProviderCode = $("#logisticsProviderCode").val();
+		if(_logisticsProviderCode.length == 0){
+			doWarn("请选择快递公司");
+			return false;
+		}		
+		var _itemName = $("#itemName").val();
+		if(_itemName.length == 0){
+			doWarn("请选择货品类别");
+			return false;
+		}	
+		var _remark = $("#remark").val();
+		if(_remark.length > 200){
+			doWarn("备注不可超过200个字符");
+			return false;
+		}
+		
+		var _sid = $("#sid").val();
+		if(_sid.length == 0){
+			doWarn("请添加寄件人");
+			return false;
+		}
+		
+		$(_this).prop('disabled', true);
+		
+		setTimeout("_unlock_form()", 2000);
+		
+		$("#toSenderList").val("");
+		$("#editForm").submit();
+		return false;
+	}
+	
+	function _unlock_form(){
+		$("#editForm").prop('disabled', false);	
+	}
+	
+	function doWarn(_message){
+		$("#_warn_message").html(_message);
+		$("#_warn").css("display","block");
+		setTimeout("_pcd_hidden('_warn')", 1500);
+	}
+	function _popup(){
+		$('#popup').click();
+		_address_click();
+	}
+	function _address_click(){
+		$('#_province_href').click();
+		_address_item(1, 2);
+	}
+	var _pcd_hidden = function(id){
+		$('#'+id).css("display","none");
+	};
+
+	var _address_item = function (id, type) {
+	    var _loading = '正在加载...';
+	    if (type == 3) { //市
+	        document.getElementById('district-cities').innerHTML = _loading;
+	        $("#district-cities").html(_loading);
+	    } else if (type == 4) { //区
+	        document.getElementById('district-counties').innerHTML = _loading;
+	        $("#district-counties").html(_loading);
+	    }
+
+	    $.ajax({
+	        type: "post",
+	        dataType: "json",
+	        url: "getdate.aspx",
+	        data: "id=" + id,
+	        success: function (data) {
+	            if (data.success) {
+	                var _div_content = '<ul class="inline unstyled">';
+	                var result =  data.message;
+	                for (var i = 0; i < result.length; i++) {
+	                    _div_content += '<li title="' + result[i].name + '" class="district-item" data-id="' + result[i].id + '" data-parent-id="' + result[i].parentId + '" data-type="' + result[i].type + '" onclick="_load_child(this)">' + result[i].display + '</li>'
+	                }
+	                _div_content += '</ul>';
+
+	                if (type == 2) { //省
+	                    document.getElementById('district-provinces').innerHTML = _div_content;
+	                    $("#district-provinces").html(_div_content);
+	                } else if (type == 3) { //市
+	                    document.getElementById('district-cities').innerHTML = _div_content;
+	                    $("#district-cities").html(_div_content);
+	                } else if (type == 4) { //区
+	                    document.getElementById('district-counties').innerHTML = _div_content;
+	                    $("#district-counties").html(_div_content);
+	                }
+	            }
+	        }
+	    });
+	};
+
+	var _load_child = function(_this){
+		var _type = $(_this).attr('data-type');
+		var _id = $(_this).attr('data-id');
+		var _name = $(_this).attr('title');
+		if(_type == 2){ //load cities
+			$('#selectProvince').val(_name);
+			$('#district-parent').val($('#selectProvince').val() + ' - 市 - 区');	
+			
+			_address_item(_id, 3);				
+			$("#_city_href").click();
+		}else if(_type == 3){ //load countries
+			$('#selectCity').val(_name);
+			$('#district-parent').val($('#selectProvince').val() + ' - ' + $('#selectCity').val() + ' - 区');	
+		
+			_address_item(_id, 4);				
+			$("#_district_href").click();
+		}else if(_type == 4){
+			$('#selectDistrict').val(_name);
+			
+			$('#province').val($('#selectProvince').val());
+			$('#city').val($('#selectCity').val());				
+			$('#district').val(_name);
+			
+			$("#exampleClose").click();
+			_reset_address_select();
+		}
+	};
+
+	function _reset_address_select(){
+		_reset_child_list();
+		$('#selectProvince').val('');
+		$('#selectCity').val('')
+		$('#selectDistrict').val('');
+		
+		var _district = $('#district').val();
+		if(_district == null || _district.length == 0){
+			$('#district-parent').val('省 - 市 - 区');
+		}else{
+			$('#district-parent').val($('#province').val() + ' - ' + $('#city').val() + ' - ' + _district);
+		}	
+	};
+
+	function _reset_child_list(){
+		$("#district-cities").html('请选择省或直辖市');
+		$("#district-counties").html('请选择市');
+	}
+		</script>
+	</body>
+</html>

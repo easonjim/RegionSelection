@@ -1,0 +1,14 @@
+C:\Users\Jim\Desktop\city\data\data\obj\Debug\data.csprojResolveAssemblyReference.cache
+C:\Users\Jim\Desktop\city\data\data\bin\data.dll
+C:\Users\Jim\Desktop\city\data\data\bin\data.pdb
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Core.dll
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Data.dll
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Data.Ext.dll
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Core.pdb
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Core.xml
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Data.pdb
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Data.xml
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Data.Ext.pdb
+C:\Users\Jim\Desktop\city\data\data\bin\MySoft.Data.Ext.xml
+C:\Users\Jim\Desktop\city\data\data\obj\Debug\data.dll
+C:\Users\Jim\Desktop\city\data\data\obj\Debug\data.pdb

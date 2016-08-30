@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MySoft.Data.Ext</name>
+    </assembly>
+    <members>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entity_byWhere(MySoft.Data.WhereClip,MySoft.Data.OrderByClip,MySoft.Data.Field[])">
+            <summary>
+            通过条件得到对象
+            </summary>
+            <param name="where"></param>
+            <returns>如果你的条件是得到单个 那么list《T》[0]就是这个对象</returns>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entity_byWhere_ToTable(MySoft.Data.WhereClip,MySoft.Data.OrderByClip,MySoft.Data.Field[])">
+            <summary>
+            得到DataTable数据集合
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_SingleEntity_byWhere(MySoft.Data.WhereClip,MySoft.Data.Field[])">
+            <summary>
+            通过条件得到单个对象
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_AllData_Table">
+            <summary>
+            得到所有的数据
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_AllData_List">
+            <summary>
+            得到所有的数据
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entitys_ByTop(System.Int32,MySoft.Data.WhereClip,MySoft.Data.OrderByClip,MySoft.Data.Field[])">
+            <summary>
+            得到top的几条数据
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_IsExist_ByWhere(MySoft.Data.WhereClip)">
+            <summary>
+            查询是否存在记录
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Update_Entity(`0)">
+            <summary>
+            更新一条记录
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Update_Entity_byWhere(MySoft.Data.Field[],System.Object[],MySoft.Data.WhereClip)">
+            <summary>
+            通过多个条件更新对象
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Update_Entity_byWhere(MySoft.Data.Field,System.Object,MySoft.Data.WhereClip)">
+            <summary>
+            通过单个条件更新对象
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Delete_Entity(`0)">
+            <summary>
+            通过对象删除记录
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Delete_Entitys(System.Collections.Generic.List{System.String})">
+            <summary>
+            通过主键ID集合删除
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Delete_Entitys(System.String[])">
+            <summary>
+            通过主键ID集合删除
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Delete_Entity(MySoft.Data.WhereClip)">
+            <summary>
+            通过条件删除对象 如果批量删除可以传入条件 where = T.ID.in(obj[])
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Add_Entity(`0)">
+            <summary>
+            add an new record,
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Insert_Or_Update(`0)">
+            <summary>
+            如果存在 则更新 否则 插入 注意：表必须有主键
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entity_byPage(System.Int32,System.Int32,MySoft.Data.WhereClip,MySoft.Data.OrderByClip,System.Int32@,MySoft.Data.Field[])">
+            <summary>
+            分页显示数据 需要记录总数
+            </summary>
+            <param name="currentPageindex">当前页码</param>
+            <param name="pageSize">pagesize</param>
+            <param name="where">WhereClient</param>
+            <param name="orderby">OrderByClip</param>
+            <param name="record">总的记录数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entity_byPage_ToTable(System.Int32,System.Int32,MySoft.Data.WhereClip,MySoft.Data.OrderByClip,System.Int32@,MySoft.Data.Field[])">
+            <summary>
+            分页 返回Datatable
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entity_Record(MySoft.Data.WhereClip)">
+            <summary>
+            通过条件得到表的记录数
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entity_byPage(System.Int32,System.Int32,MySoft.Data.WhereClip,MySoft.Data.OrderByClip,MySoft.Data.Field[])">
+            <summary>
+             分页显示数据 不需要记录总数
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.Get_Entity_byPage_ToTable(System.Int32,System.Int32,MySoft.Data.WhereClip,MySoft.Data.OrderByClip,MySoft.Data.Field[])">
+            <summary>
+            分页返回Datatable
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.BatchAdd_Entitys(System.Collections.Generic.List{`0})">
+            <summary>
+            带事物的批量添加
+            </summary>
+        </member>
+        <member name="M:MySoft.Data.BaseDao`1.BatchUpdate_Entitys(System.Collections.Generic.List{`0})">
+            <summary>
+            批量更新
+            </summary>
+        </member>
+        <member name="F:MySoft.Data.DataAccess.DefaultSession">
+            <summary>
+            通过配置节来实例化DbSession
+            </summary>
+        </member>
+        <member name="F:MySoft.Data.DataAccess.MyDbSession">
+            <summary>
+            通过自定义类来实例化DbSession
+            </summary>
+        </member>
+        <member name="T:MySoft.Data.MyDbSession">
+            <summary>
+            DataExample会话类
+            </summary>
+        </member>
+    </members>
+</doc>

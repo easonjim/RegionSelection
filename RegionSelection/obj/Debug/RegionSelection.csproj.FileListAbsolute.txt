@@ -1,0 +1,8 @@
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\bin\RegionSelection.dll
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\bin\RegionSelection.pdb
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\bin\MySoft.Core.dll
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\bin\MySoft.Data.dll
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\bin\MySoft.Data.Ext.dll
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\obj\Debug\RegionSelection.csprojResolveAssemblyReference.cache
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\obj\Debug\RegionSelection.dll
+E:\开发工程\自己公司的项目\RegionSelection\RegionSelection\obj\Debug\RegionSelection.pdb
